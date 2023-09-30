@@ -3,27 +3,16 @@
 @section('content')
 
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-md-6">
-            <h1>Looking for a job?</h1>
-            <h3>Please create an account</h3>
-            <img src="{{asset('image/register.png')}}" width="580"
-            class="img-responsibe">
-        </div>
+    <div class="row justify-content-center">
 
-        <div class="col-md-6 mt-5 mb-5">
-            <div class="card" id="card" style="margin-top:50px;">
-                <div class="card-header">Register</div>
-                <form action="{{route('store.seeker')}}" method="post" id="registrationForm" enctype="multipart/form-data">
+
+        <div class="col-md-8 mt-5 mb-5">
+            <div class="card shadow-lg" id="card" style="margin-top:50px;">
+                <div class="card-header">Login</div>
+                <form action="{{route('login.post')}}" method="post" id="registrationForm" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="">Full name</label>
-                            <input type="text" name="name" class="form-control" required>
-                              @if($errors->has('name'))
-                            <span class="text-danger">{{ $errors->first('name')}}</span>
-                            @endif
-                        </div>
+                      
                         <div class="form-group">
                             <label for="">Email</label>
                             <input type="text" name="email" class="form-control" required>
@@ -39,8 +28,8 @@
                             @endif
                         </div>
                         <br>
-                        <div class="form-group mb-5 mt-3">
-                            <button class="btn btn-dark" id="btnRegister">Register</button>
+                        <div class="form-group mb-5 mt-3 text-center">
+                            <button class="btn btn-dark" id="btnRegister">Login</button>
                         </div>
                     </div>
                 </form>
