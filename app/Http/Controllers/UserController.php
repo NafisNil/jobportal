@@ -10,10 +10,14 @@ class UserController extends Controller
 {
     //
     const  JOB_SEEKER = "seeker";
+    const  JOB_POSTER = "employer";
     public function createSeeker(){
         return view('user.seeker-register');
     }
 
+    public function createEmployer(){
+        return view('user.employer-register');
+    }
     public function storeSeeker(SeekerRegistrationRequest $request){
 
         User::create([
@@ -23,9 +27,21 @@ class UserController extends Controller
             'user_type' => self::JOB_SEEKER
         ]);
 
-        return back();
+        return redirect()->route('login')->with('successMessage', 'Your account was created!');
     }
 
+    public function storeEmployer(SeekerRegistrationRequest $request){
+
+        User::create([
+            'name' => request('name'),
+            'email' => request('email'),
+            'password' =>bcrypt( request('password')),
+            'user_type' => self::JOB_POSTER,
+            'user_trial' => now()->addWeek()
+        ]);
+
+        return redirect()->route('login')->with('successMessage', 'Your account was created!');
+    }
     public function login(){
         return view('user.login');
     }
