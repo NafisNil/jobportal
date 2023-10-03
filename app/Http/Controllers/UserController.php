@@ -20,26 +20,29 @@ class UserController extends Controller
     }
     public function storeSeeker(SeekerRegistrationRequest $request){
 
-        User::create([
+        $user = User::create([
             'name' => request('name'),
             'email' => request('email'),
             'password' =>bcrypt( request('password')),
             'user_type' => self::JOB_SEEKER
         ]);
 
+        Auth::login($user);
+        $user->sendEmailVerificationNotification();
         return redirect()->route('login')->with('successMessage', 'Your account was created!');
     }
 
     public function storeEmployer(SeekerRegistrationRequest $request){
 
-        User::create([
+       $user =  User::create([
             'name' => request('name'),
             'email' => request('email'),
             'password' =>bcrypt( request('password')),
             'user_type' => self::JOB_POSTER,
             'user_trial' => now()->addWeek()
         ]);
-
+        Auth::login($user);
+        $user->sendEmailVerificationNotification();
         return redirect()->route('login')->with('successMessage', 'Your account was created!');
     }
     public function login(){

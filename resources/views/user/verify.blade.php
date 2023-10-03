@@ -8,7 +8,8 @@
                     Verify Email
                 </div>
                 <div class="card-body">
-                        <p>Your account has not been verified. Please verify your account!</p>
+                        <p>Your account has not been verified. Please verify your account!</p><br>
+                        <a href="{{route('resend.email')}}" class="btn btn-outline btn-sm">Resend Verification Email </a>
                 </div>
             </div>
         </div>

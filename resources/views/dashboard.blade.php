@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
          Hello ,    {{auth()->user()->name}} <br>
          @if (Auth::check() && auth()->user()->user_type == "employer")
-         <p> Your trial date will be expired at    : <b>{{auth()->user()->user_trial}} </b>  &nbsp;  </p> 
+         <p> Your trial date  {{now()->format('Y-m-d') > auth()->user()->user_trial  ?  'was expired' : 'will be expired'}}  at    : <b>{{auth()->user()->user_trial}} </b>  &nbsp;  </p> 
          @endif
         <br>
            
