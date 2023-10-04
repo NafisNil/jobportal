@@ -14,7 +14,7 @@
         <div class="col-md-6 mt-5 mb-5">
             <div class="card" id="card" style="margin-top:50px;">
                 <div class="card-header">Employer Registration</div>
-                <form action="{{route('store.employer')}}" method="post" id="registrationForm" enctype="multipart/form-data">
+                <form action="#" method="post" id="registrationForm" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
