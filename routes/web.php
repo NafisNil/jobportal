@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Middleware\isEmployer;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,10 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::get('/resend/verification/email', [DashboardController::class, 'resend'])->name('resend.email');
+Route::get('subscribe', [SubscriptionController::class, 'subscribe']);
+Route::get('pay/weekly', [SubscriptionController::class, 'initialPayment'])->name('pay.weekly');
+Route::get('pay/monthly', [SubscriptionController::class, 'initialPayment'])->name('pay.monthly');
+Route::get('pay/yearly', [SubscriptionController::class, 'initialPayment'])->name('pay.yearly');
 /*Route::get('/users', function () {
     return view('user.index');
 });*/

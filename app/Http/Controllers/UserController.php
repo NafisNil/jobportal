@@ -29,7 +29,8 @@ class UserController extends Controller
 
         Auth::login($user);
         $user->sendEmailVerificationNotification();
-        return redirect()->route('login')->with('successMessage', 'Your account was created!');
+        return response()->json('success');
+     //   return redirect()->route('login')->with('successMessage', 'Your account was created!');
     }
 
     public function storeEmployer(SeekerRegistrationRequest $request){
