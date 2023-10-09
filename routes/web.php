@@ -44,6 +44,9 @@ Route::get('subscribe', [SubscriptionController::class, 'subscribe']);
 Route::get('pay/weekly', [SubscriptionController::class, 'initialPayment'])->name('pay.weekly');
 Route::get('pay/monthly', [SubscriptionController::class, 'initialPayment'])->name('pay.monthly');
 Route::get('pay/yearly', [SubscriptionController::class, 'initialPayment'])->name('pay.yearly');
+
+Route::get('payment/success', [SubscriptionController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('payment/cancel', [SubscriptionController::class, 'cancel'])->name('payment.cancel');
 /*Route::get('/users', function () {
     return view('user.index');
 });*/
