@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if (Session::get('message'))
+    <div class="card card-info">{{Session::get('message')}}</div>
+@endif
 <div class="container mt-5">
     <div class="row justify-content-center">
    

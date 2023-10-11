@@ -1,13 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if (Session::has('success'))
+    <div class="alert alert-success">{{Session::get('success')}}</div>
+@elseif(Session::has('error'))
+<div class="alert alert-danger">{{Session::get('error')}}</div>
+@endif
 <div class="container mt-5">
     <div class="row justify-content-center">
          Hello ,    {{auth()->user()->name}} <br>
+    @if (!auth()->user()->billing_ends)
+ 
          @if (Auth::check() && auth()->user()->user_type == "employer")
          <p> Your trial date  {{now()->format('Y-m-d') > auth()->user()->user_trial  ?  'was expired' : 'will be expired'}}  at    : <b>{{auth()->user()->user_trial}} </b>  &nbsp;  </p> 
          @endif
+                
+    @endif
+
+    @if (Auth::check() && auth()->user()->user_type == "employer")
+    <p> Your membership date  {{now()->format('Y-m-d') > auth()->user()->billing_ends  ?  'was expired' : 'will be expired'}}  at    : <b>{{auth()->user()->billing_ends}} </b>  &nbsp;  </p> 
+    @endif
         <br>
            
             <br>

@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use App\Http\Middleware\isEmployer;
+use App\Mail\PurchaseMail;
+use App\Http\Middleware\donotAllowUserToMakePayment;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 class SubscriptionController extends Controller
 {
     //
@@ -15,7 +19,7 @@ class SubscriptionController extends Controller
     const YEARLY_AMOUNT = 200;
     const CURRENCY = 'USD';
     public function __construct(){
-        $this->middleware(['auth', isEmployer::class]);
+        $this->middleware(['auth', isEmployer::class, donotAllowUserToMakePayment::class]);
     }
     public function subscribe(){
         return view('subscription.index');
@@ -95,15 +99,33 @@ class SubscriptionController extends Controller
                 return redirect($session->url);
             }
         } catch (\Throwable $th) {
-            return $th;
+             return response()->json($th);
         }
     }
 
     public function paymentSuccess(Request $request){
+        $plan = $request->plan;
+        $billingEnds = $request->billing_ends;
+        User::where('id', auth()->user()->id)->update([
+            'plan' => $plan,
+            'billing_ends' => $billingEnds,
+            'status' => 'paid'
+        ]);
 
+        try {
+            //code...
+            Mail::to(auth()->user())->send(new PurchaseMail($plan, $billingEnds));
+        } catch (\Throwable $th) {
+            //throw $th;
+             return response()->json($th);
+        }
+      
+
+
+        return redirect()->route('dashboard')->with('success', 'Payment was successfully processed!');
     }
 
     public function cancelPayment(){
-
+        return redirect()->route('dashboard')->with('error', 'Payment was not successful!');
     }
 }
