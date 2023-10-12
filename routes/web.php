@@ -50,7 +50,7 @@ Route::get('pay/yearly', [SubscriptionController::class, 'initialPayment'])->nam
 
 Route::get('payment/success', [SubscriptionController::class, 'paymentSuccess'])->name('payment.success');
 Route::get('payment/cancel', [SubscriptionController::class, 'cancelPayment'])->name('payment.cancel');
-Route::get('job/create', [PostJobController::class, 'create'])->name('job.create')->middleware(isPremiunUser::class);
+Route::get('job/create', [PostJobController::class, 'create'])->name('job.create')->middleware(isPremiumUser::class);
 /*Route::get('/users', function () {
     return view('user.index');
 });*/
