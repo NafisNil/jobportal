@@ -8,6 +8,9 @@
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
                Your Jobs
+               @if(Session::has('success'))
+               <div class="alert alert-success">{{Session::get('success')}}</div>
+           @endif
             </div>
             <div class="card-body">
                 <table id="datatablesSimple">
@@ -42,11 +45,15 @@
 
 
                         <!-- Modal -->
+                       
                         <div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <form action="{{route('job.delete', [$item->id])}}" method="POST" >
+                                @csrf
+                           @method('DELETE')
                             <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Are you sure want to Delete it?</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -56,11 +63,14 @@
                                 </div>
                                 <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-danger">Delete ?</button>
                                 </div>
                             </div>
                             </div>
+                        </form>
                         </div>
+
+                 
                         @endforeach
                     </tbody>
                 </table>

@@ -31,7 +31,11 @@ Route::post('/register/employer', [UserController::class, 'storeEmployer'])->nam
 Route::get('login', [UserController::class, 'login'])->name('login');
 Route::post('login', [UserController::class, 'postLogin'])->name('login.post');
 Route::post('logout', [UserController::class, 'logout'])->name('logout');
-Route::get('dashboard', [DashboardController::class, 'index'])->middleware('verified')->name('dashboard');
+
+Route::get('user/profile', [UserController::class, 'profile'])->name('user.profile')->middleware('auth');
+Route::post('user/profile', [UserController::class, 'update'])->name('user.update.profile')->middleware('auth');
+
+Route::get('dashboard', [DashboardController::class, 'index'])->middleware('verified', isPremiumUser::class)->name('dashboard');
 Route::get('verify', [DashboardController::class, 'verify'])->name('verification.notice');
 
 
@@ -50,11 +54,12 @@ Route::get('pay/yearly', [SubscriptionController::class, 'initialPayment'])->nam
 
 Route::get('payment/success', [SubscriptionController::class, 'paymentSuccess'])->name('payment.success');
 Route::get('payment/cancel', [SubscriptionController::class, 'cancelPayment'])->name('payment.cancel');
-Route::get('job/create', [PostJobController::class, 'create'])->name('job.create')->middleware(isPremiumUser::class);
-Route::post('job/store', [PostJobController::class, 'store'])->name('job.store')->middleware(isPremiumUser::class);
-Route::get('job/{listing}/edit',[PostJobController::class, 'edit'])->name('job.edit')->middleware(isPremiumUser::class);        
-Route::put('job/{listing}/edit',[PostJobController::class, 'update'])->name('job.update')->middleware(isPremiumUser::class);  
-Route::get('job',[PostJobController::class, 'index'])->name('job.index')->middleware(isPremiumUser::class);  
+Route::get('job/create', [PostJobController::class, 'create'])->name('job.create');
+Route::post('job/store', [PostJobController::class, 'store'])->name('job.store');
+Route::get('job/{listing}/edit',[PostJobController::class, 'edit'])->name('job.edit');        
+Route::put('job/{id}/edit',[PostJobController::class, 'update'])->name('job.update');  
+Route::get('job',[PostJobController::class, 'index'])->name('job.index');  
+Route::delete('job/{id}/edit',[PostJobController::class, 'destroy'])->name('job.delete');  
 /*Route::get('/users', function () {
     return view('user.index');
 });*/

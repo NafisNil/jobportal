@@ -21,6 +21,7 @@ class PostJobController extends Controller
     public function __construct(JobPost $job){
         $this->job = $job;
         $this->middleware('auth');
+        $this->middleware(isPremium::class)->only(['create', 'store']);
     }
     public  function create(){
         return view('job.create');
@@ -58,5 +59,10 @@ class PostJobController extends Controller
        $this->job->updatePost($id, $request);
 
         return back()->with('success', 'Your post job have been successfully updated!');
+    }
+
+    public function destroy($id){
+        Listing::find($id)->delete();
+        return back()->with('success', 'Deleted successfully!');
     }
 }
