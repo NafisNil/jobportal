@@ -1,4 +1,4 @@
-@extends('layouts.admin.main')
+@extends('layouts.app')
 
 @section('content')
 
@@ -14,14 +14,14 @@
         <form action="{{route('user.update.profile')}}" method="post" enctype="multipart/form-data">@csrf
             <div class="col-md-8">
                 <div class="form-group">
-                    <label for="logo">Logo</label>
-                    <input type="file" class="form-control" id="logo" name="profile_pic">
+                    <label for="logo">Profile Image</label>
+                    <input type="file" class="form-control" id="name" name="profile_pic">
                     @if(auth()->user()->profile_pic)
                         <img src="{{Storage::url(auth()->user()->profile_pic)}}" width="150" class="mt-3">
                     @endif
                 </div>
                 <div class="form-group">
-                    <label for="name">Company name</label>
+                    <label for="name">Your name</label>
                     <input type="text" class="form-control" name="name" value="{{auth()->user()->name}}">
                 </div>
                 <div class="form-group mt-4">
@@ -50,23 +50,6 @@
                 </div>
                 <div class="form-group mt-4">
                     <button class="btn btn-success" type="submit">Update</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="row justify-content-center">
-        <h2>Update Your Resume</h2>
-
-        <form action="{{route('upload.resume')}}" method="post" enctype="multipart/form-data">@csrf
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label for="resume">Your Resume</label>
-                    <input type="file" name="resume" class="form-control" id="resume">
-                </div>
-
-                <div class="form-group mt-4">
-                    <button class="btn btn-success" type="submit">Upload</button>
                 </div>
             </div>
         </form>

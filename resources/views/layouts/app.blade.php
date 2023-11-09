@@ -18,12 +18,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
-          {{-- <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{{route('dashboard')}}">Dashboard</a>
+            @if (Auth::check())
+
+          <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{route('seeker.profile')}}">Profile</a>
             </li>
-            <li class="nav-item">
+            @endif
+            {{-- <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{{route('subscribe')}}">Subscribe</a>
             </li> --}} 
             @if (!Auth::check())

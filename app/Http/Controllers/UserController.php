@@ -59,7 +59,13 @@ class UserController extends Controller
 
         $credentials = $request->only('email', 'password');
         if(Auth::attempt($credentials)){
-            return redirect()->intended('dashboard');
+            if (auth()->user()->user_type == "employer") {
+                # code...
+                return redirect()->to('dashboard');
+            }else{
+                return redirect()->to('/');
+            }
+         
         }
 
         return "Wrong email or password";
@@ -72,6 +78,40 @@ class UserController extends Controller
 
     public function profile(){
             return view('profile.index');
+    }
+
+    public function seekerProfile(){
+        return view('seeker.profile');
+    }
+
+    public function changePassword(Request $request){
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|min:8|confirmed'
+        ]);
+
+        $user = auth()->user();
+        if (!Hash::check($request->current_passowrd, $user->password)) {
+            # code...
+            return back()->with('error', 'current password does not match!');
+        }
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return back()->with('success', 'Your password has been changed successfully! ');
+    }
+
+    public function uploadResume(Request $request){
+        $this->validate($request, [
+            'resume' => 'required|mimes:pdf,docx,doc',
+         
+        ]);
+        if ($request->hasFile('resume')) {
+            # code...
+             $resume = $request->file('resume')->store('resume', 'public');
+            User::find(auth()->user()->id)->update(['resume' => $resume]);
+
+            return back()->with('success', 'Your resume has been updated!');
+        }
     }
 
     public function update(Request $request){
