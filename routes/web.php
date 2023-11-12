@@ -43,6 +43,7 @@ Route::get('dashboard', [DashboardController::class, 'index'])->middleware('veri
 Route::get('verify', [DashboardController::class, 'verify'])->name('verification.notice');
 
 Route::get('applicants', [ApplicantController::class, 'index'])->name('applicants.index');
+Route::get('applicants/{slug}', [ApplicantController::class, 'show'])->name('applicants.show');
  
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
