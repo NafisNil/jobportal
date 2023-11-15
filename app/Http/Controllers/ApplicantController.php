@@ -14,7 +14,8 @@ class ApplicantController extends Controller
        return view('applicants.index', compact('listings'));
     }
 
-    public function show($slug){
-        Listing::with('users')->where('slug', $slug)->first();
+    public function show(Listing $listing){
+        $listings = Listing::with('users')->where('slug', $listing->slug)->first();
+        return view('applicants.show', compact('listings'));
     }
 }
