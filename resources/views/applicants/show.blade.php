@@ -6,24 +6,28 @@
         <div class="col-md-8 mt-5">
             <h1>{{$listings->title}}</h1>
         </div>
-        @foreach ($collection as $item)
+        @foreach ($listings->users as $user)
         <div class="card mt-5">
             <div class="row g-0">
                 <div class="col-auto">
-                   
-                    <img src="https://placehold.co/400" class="rounded-circle" style="width: 150px;" alt="Profile Picture">
+                    @if ($user->profile_pic)
+                        <img src="{{Storage::url($user->profile_pic)}}" class="rounded-circle" style="width: 150px;" alt="Profile Picture">
+                    @else
+                        <img src="https://placehold.co/400" class="rounded-circle" style="width: 150px;" alt="Profile Picture">
+                    @endif
+                    
            
                 </div>
                 <div class="col">
                     <div class="card-body">
-                        <p class="fw-bold">John doe</p>
-                        <p class="card-text">Johndoe@gmail.com</p>
-                        <p class="card-text">Applied on: 10-12-2024</p>
+                        <p class="fw-bold">{{$user->name}}</p>
+                        <p class="card-text">{{$user->email}}</p>
+                        <p class="card-text">Applied on: {{$user->pivot->created_at}}</p>
                     </div>
                 </div>
                 <div class="col-auto align-self-center">
-                    <form action="#" method="post">
-                        <a href="#" class="btn btn-primary" target="_blank">Download Resume</a>
+                    <form action="{{route('applicants.shortlist', [$listing->id, $user->id])}}" method="post">
+                        <a href="{{Storage::url($user->resume)}}" class="btn btn-primary" target="_blank">Download Resume</a>
                         <button type="submit" class="">
                             Shortlist
                         </button>
