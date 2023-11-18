@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\PostJobController;
 use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\JobListingController;
 use App\Http\Middleware\isEmployer;
 use App\Http\Middleware\isPremiumUser;
 use App\Http\Middleware\CheckAuth;
@@ -21,9 +22,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [JoblistingController::class, 'index']);
 
 Route::get('/register/seeker', [UserController::class, 'createSeeker'])->name('create.seeker')->middleware(CheckAuth::class);
 Route::post('/register/seeker', [UserController::class, 'storeSeeker'])->name('store.seeker');
