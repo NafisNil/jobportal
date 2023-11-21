@@ -35,7 +35,9 @@
             </ul>
         </div>
     </div>
+   
     <div class="row mt-2 g-1">
+        @foreach ($jobs as $item)
         <div class="col-md-3">
             <div class="card p-2">
                 <div class="text-right"> <small class="badge text-bg-info">Fulltime</small> </div>
@@ -51,6 +53,8 @@
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
+
 </div>
 @endsection
